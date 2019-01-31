@@ -9,11 +9,10 @@ $(document).ready(function() {
  
     $('#addRow').on( 'click', function () {
         table.row.add( [
-            $('#date-input').val(),
-            $('#category-input option:selected').text(),
-            $('#comment').val(),
-            $('#number-input').val(),
-            $("input[name='currency']:checked").val()
+            $('#main_date').val(),
+            $('#main_cat option:selected').text(),
+            $('#main_sum').val(),
+            $('#main_com').val()
         ] ).draw( false );
     } );
 } );
@@ -29,7 +28,9 @@ $(document).ready(function() {
   $('#myTable tbody').on( 'click', 'tr', function () {
       if ( $(this).hasClass('selected') ) {
           $(this).removeClass('selected');
+          
       }
+
       else {
           table.$('tr.selected').removeClass('selected');
           $(this).addClass('selected');
@@ -38,6 +39,13 @@ $(document).ready(function() {
 
   $('#deleteRow').click( function () {
       table.row('.selected').remove().draw( false );
+      $.ajax({
+        type: 'Delete',
+        url: 'index.js',
+        success:function(){
+      console.log('Uspesno ste obrisali')
+        }
+      });
   } );
 } );
 
@@ -58,4 +66,24 @@ $(document).ready(function() {
 //         }
 //     });
 
+// });
+
+// $(document).ready(function() {
+	// $('a.delete').click(function(e) {
+		// e.preventDefault();
+		// var parent = $(this).parent();
+		// $.ajax({
+			// type: 'get',
+			// url: 'index.js',
+			// data: 'ajax=1&delete=' + parent.attr('id').replace('record-',''),
+			// beforeSend: function() {
+				// parent.animate({'backgroundColor':'#fb6c6c'},300);
+			// },
+			// success: function() {
+				// parent.slideUp(300,function() {
+					// parent.remove();
+				// });
+			//}
+		// });
+	// });
 // });
