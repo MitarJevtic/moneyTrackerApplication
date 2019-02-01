@@ -40,9 +40,14 @@ app.get('/', function(req, res) {
     })
 })
 
-app.get('/:id',(req, res)=> {
-    con.query('DELETE FROM main where main_id= ?', [req.params.id],(err, rows,fields)=> {
+app.post('/delete',(req, res)=> {
+    let delete_id = Number(req.body.main_id); 
+    console.log(req.params);
+    con.query('DELETE FROM main where main_id= ?', [delete_id],(err, rows,fields)=> {
         if (!err) {
+            data = {
+                deleted: true
+            }
             res.send('Deleted successfully.');
         } else {
           console.log(err);
@@ -51,6 +56,17 @@ app.get('/:id',(req, res)=> {
        }
    })
 })
+
+// con.connect(function(err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+
+//     var sql = "INSERT INTO main (main_id, 'main_date', main_cat, main_sum, main_com) VALUES (DEFAULT,'"+ main_date +"', '"+ main_cat +"','"+ main_sum +"','"+ main_com +"')";
+//     con.query(sql, function (err, result) {
+//         if (err) throw err;
+//         console.log("1 record inserted");
+//     });
+// });
 
 app.listen(port, function() {
     console.log(`Example app listening on port ${port}!`);
